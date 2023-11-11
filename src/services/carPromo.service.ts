@@ -1,6 +1,7 @@
 import { ApiError } from "../errors/api.error";
 import { carPromoRepository } from "../repositories/carPromo.repository";
 import { ICarPromo } from "../types/carPromo.type";
+import {EUserRoles} from "../enums/user-roles.enum";
 
 class CarPromoService {
   public async getAll(): Promise<ICarPromo[]> {
@@ -15,26 +16,28 @@ class CarPromoService {
     carId: string,
     dto: Partial<ICarPromo>,
     userId: string,
+    role: string
   ): Promise<ICarPromo> {
-    await this.checkAbilityToManage(userId, carId);
-    return await carPromoRepository.updateCar(carId, dto);
+    await this.checkAbilityToManage(userId, carId, role);
+    return await carPromoRepository.updateCar(carId, dto, role );
   }
 
-  public async deleteCar(carId: string, userId: string): Promise<void> {
-    await this.checkAbilityToManage(userId, carId);
+  public async deleteCar(carId: string, userId: string, role: string): Promise<void> {
+    await this.checkAbilityToManage(userId, carId, role);
     await carPromoRepository.deleteCar(carId);
   }
 
   private async checkAbilityToManage(
     userId: string,
     manageCarId: string,
+    role: string
   ): Promise<ICarPromo> {
     const car = await carPromoRepository.getOneByParams({
       _userId: userId,
       _id: manageCarId,
     });
-    if (!car) {
-      throw new ApiError("U can not manage this car", 403);
+    if (!car && role !== EUserRoles.admin) {
+      throw new ApiError("You can not manage this car", 403);
     }
     return car;
   }

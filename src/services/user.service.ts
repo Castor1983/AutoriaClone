@@ -35,8 +35,9 @@ class UserService {
     manageUserId: string,
     dto: Partial<IUser>,
     userId: string,
+    role: string
   ): Promise<IUser> {
-    this.checkAbilityToManage(userId, manageUserId);
+    this.checkAbilityToManage(userId, manageUserId, role);
     return await userRepository.updateOneById(manageUserId, dto);
   }
 
@@ -48,7 +49,7 @@ class UserService {
     return await userRepository.findById(userId);
   }
 
-  private checkAbilityToManage(userId: string, manageUserId: string): void {
+  private checkAbilityToManage(userId: string, manageUserId: string, role: string): void {
     if (userId !== manageUserId) {
       throw new ApiError("U can not manage this user", 403);
     }

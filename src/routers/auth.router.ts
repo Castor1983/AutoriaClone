@@ -13,8 +13,9 @@ router.post(
     "/admin",
     commonMiddleware.isBodyValid(UserValidator.register),
     userMiddleware.isEmailUniq,
-    authController.register,
+    authController.administration,
 );
+
 router.post(
   "/register",
   commonMiddleware.isBodyValid(UserValidator.register),

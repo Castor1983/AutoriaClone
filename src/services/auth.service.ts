@@ -12,9 +12,25 @@ import { ISetNewPassword, IUser, IUserCredentials } from "../types/user.type";
 import { emailService } from "./email.service";
 import { passwordService } from "./password.service";
 import { tokenService } from "./token.service";
+import {EUserRoles} from "../enums/user-roles.enum";
 
 class AuthService {
-  public async register(dto: IUser): Promise<void> {
+  public async administration(dto: IUser): Promise<void> {
+    try {
+      const user = await userRepository.getOneByParams({
+        role: EUserRoles.admin,
+      });
+      if (user) {
+        throw new ApiError("You can`t be admin. Admin is already exist", 400);
+      }
+
+      const admin = await this.register(dto);
+      await userRepository.setRole(admin._id, EUserRoles.admin);
+    } catch (e) {
+      throw new ApiError(e.message, e.status);
+    }
+  }
+  public async register(dto: IUser): Promise<IUser> {
     try {
       const hashedPassword = await passwordService.hash(dto.password);
 
@@ -38,6 +54,7 @@ class AuthService {
         name: dto.name,
         actionToken,
       });
+      return user;
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -46,7 +63,7 @@ class AuthService {
   public async login(dto: IUserCredentials): Promise<ITokensPair> {
     try {
       const user = await userRepository.getOneByParams({ email: dto.email }, [
-        "password",
+        "password", "name", "role",
       ]);
       if (!user) {
         throw new ApiError("Invalid credentials provided", 401);
@@ -63,6 +80,7 @@ class AuthService {
       const tokensPair = tokenService.generateTokenPair({
         userId: user._id.toString(),
         name: user.name,
+        role: user.role
       });
       await tokenRepository.create({ ...tokensPair, _userId: user._id });
 
@@ -80,6 +98,7 @@ class AuthService {
       const tokensPair = tokenService.generateTokenPair({
         userId: payload.userId,
         name: payload.name,
+        role: payload.role
       });
 
       await Promise.all([

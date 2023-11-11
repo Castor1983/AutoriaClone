@@ -19,7 +19,7 @@ class CarPromoRepository {
     return await CarPromo.create({ ...dto, _userId: userId });
   }
 
-  public async updateCar(carId: string, dto: Partial<ICarPromo>): Promise<ICarPromo> {
+  public async updateCar(carId: string, dto: Partial<ICarPromo>, role: string): Promise<ICarPromo> {
     return await CarPromo.findByIdAndUpdate(carId, dto, {
       returnDocument: "after",
     });

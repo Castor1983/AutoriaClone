@@ -39,9 +39,9 @@ class CarPromoController {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const { userId } = req.res.locals.tokenPayload as ITokenPayload;
+      const { userId, role } = req.res.locals.tokenPayload as ITokenPayload;
 
-      await carPromoService.deleteCar(req.params.carId, userId);
+      await carPromoService.deleteCar(req.params.carId, userId, role);
 
       res.sendStatus(204);
     } catch (e) {
@@ -55,12 +55,13 @@ class CarPromoController {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const { userId } = req.res.locals.tokenPayload as ITokenPayload;
+      const { userId, role } = req.res.locals.tokenPayload as ITokenPayload;
 
       const car = await carPromoService.updateCar(
         req.params.carId,
         req.body,
         userId,
+          role
       );
 
       res.status(201).json(car);

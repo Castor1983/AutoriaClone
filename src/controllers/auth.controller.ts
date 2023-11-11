@@ -5,6 +5,20 @@ import { ITokenPayload, ITokensPair } from "../types/token.types";
 import { ISetNewPassword, IUser } from "../types/user.type";
 
 class AuthController {
+
+  public async administration(
+      req: Request,
+      res: Response,
+      next: NextFunction,
+  ): Promise<Response<void>> {
+    try {
+      await authService.administration(req.body);
+
+      return res.sendStatus(201);
+    } catch (e) {
+      next(e);
+    }
+  }
   public async register(
     req: Request,
     res: Response,

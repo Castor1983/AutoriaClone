@@ -5,7 +5,7 @@ import { IUser } from "./user.type";
 import {EUserRoles} from "../enums/user-roles.enum";
 
 export interface ITokenPayload {
-  userId: string;
+  userId?: string;
   name?: string;
   role?: EUserRoles
 }

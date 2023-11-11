@@ -5,7 +5,7 @@ export class UserValidator {
   static firstName = joi.string().min(2).max(50).trim();
   static email = joi.string().regex(regexConstant.EMAIL).trim();
   static password = joi.string().regex(regexConstant.PASSWORD).trim();
-  static phone = joi.string().regex(regexConstant.PHONENUMBER).trim();
+  static phone = joi.number()
 
 
   static update = joi.object({

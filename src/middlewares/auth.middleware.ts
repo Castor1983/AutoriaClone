@@ -5,20 +5,23 @@ import { tokenRepository } from "../repositories/token.repository";
 import { tokenService } from "../services/token.service";
 
 class AuthMiddleware {
-  public checkRole(role: string) {
+  public checkRole(roles: string[]) {
     return async (req: Request, res: Response, next: NextFunction) => {
-
       try {
         const accessToken = req.get("Authorization");
         if (!accessToken) {
           throw new ApiError("No Token", 401);
         }
 
-        const payload = tokenService.checkToken(accessToken, "access");
+        const { role: userRole } = tokenService.checkToken(
+            accessToken,
+            "access",
+        );
 
-        if (payload.role !== role) {
-          throw new ApiError("Access denied", 403);
-        }
+
+          if (!roles.includes(userRole)) {
+            throw new ApiError("Access denied", 403);
+          };
 
         next();
       } catch (e) {
