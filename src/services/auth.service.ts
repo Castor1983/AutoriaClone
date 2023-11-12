@@ -2,6 +2,8 @@ import { ObjectId } from "mongodb";
 
 import { EActionTokenType } from "../enums/actionTokenType.enum";
 import { EEmailAction } from "../enums/email.action.enum";
+import { EUserTypeAccount } from "../enums/user-account.enum";
+import { EUserRoles } from "../enums/user-roles.enum";
 import { EUserStatus } from "../enums/user-status.enum";
 import { ApiError } from "../errors/api.error";
 import { actionTokenRepository } from "../repositories/action-token.repository";
@@ -12,7 +14,6 @@ import { ISetNewPassword, IUser, IUserCredentials } from "../types/user.type";
 import { emailService } from "./email.service";
 import { passwordService } from "./password.service";
 import { tokenService } from "./token.service";
-import {EUserRoles} from "../enums/user-roles.enum";
 
 class AuthService {
   public async administration(dto: IUser): Promise<void> {
@@ -26,6 +27,20 @@ class AuthService {
 
       const admin = await this.register(dto);
       await userRepository.setRole(admin._id, EUserRoles.admin);
+    } catch (e) {
+      throw new ApiError(e.message, e.status);
+    }
+  }
+  public async changeRole(userId: string): Promise<void> {
+    try {
+      await userRepository.setRole(userId, EUserRoles.manager);
+    } catch (e) {
+      throw new ApiError(e.message, e.status);
+    }
+  }
+  public async byPremium(userId: string): Promise<void> {
+    try {
+      await userRepository.byPremium(userId, EUserTypeAccount.premium);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -63,7 +78,9 @@ class AuthService {
   public async login(dto: IUserCredentials): Promise<ITokensPair> {
     try {
       const user = await userRepository.getOneByParams({ email: dto.email }, [
-        "password", "name", "role",
+        "password",
+        "name",
+        "role",
       ]);
       if (!user) {
         throw new ApiError("Invalid credentials provided", 401);
@@ -80,7 +97,7 @@ class AuthService {
       const tokensPair = tokenService.generateTokenPair({
         userId: user._id.toString(),
         name: user.name,
-        role: user.role
+        role: user.role,
       });
       await tokenRepository.create({ ...tokensPair, _userId: user._id });
 
@@ -98,7 +115,7 @@ class AuthService {
       const tokensPair = tokenService.generateTokenPair({
         userId: payload.userId,
         name: payload.name,
-        role: payload.role
+        role: payload.role,
       });
 
       await Promise.all([

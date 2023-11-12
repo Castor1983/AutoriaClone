@@ -5,11 +5,10 @@ import { ITokenPayload, ITokensPair } from "../types/token.types";
 import { ISetNewPassword, IUser } from "../types/user.type";
 
 class AuthController {
-
   public async administration(
-      req: Request,
-      res: Response,
-      next: NextFunction,
+    req: Request,
+    res: Response,
+    next: NextFunction,
   ): Promise<Response<void>> {
     try {
       await authService.administration(req.body);
@@ -100,6 +99,36 @@ class AuthController {
       const actionToken = req.query.actionToken as string;
 
       await authService.activate(actionToken);
+
+      return res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async changeRole(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response<void>> {
+    try {
+      const userId = req.params.userId;
+
+      await authService.changeRole(userId);
+
+      return res.sendStatus(204);
+    } catch (e) {
+      next(e);
+    }
+  }
+  public async byPremium(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response<void>> {
+    try {
+      const userId = req.params.userId;
+
+      await authService.byPremium(userId);
 
       return res.sendStatus(204);
     } catch (e) {

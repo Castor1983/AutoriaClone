@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { authController } from "../controllers/auth.controller";
+import { EUserRoles } from "../enums/user-roles.enum";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { commonMiddleware } from "../middlewares/common.middleware";
 import { userMiddleware } from "../middlewares/user.middleware";
@@ -10,10 +11,20 @@ import { UserValidator } from "../validators/user.validator";
 const router = Router();
 
 router.post(
-    "/admin",
-    commonMiddleware.isBodyValid(UserValidator.register),
-    userMiddleware.isEmailUniq,
-    authController.administration,
+  "/admin",
+  commonMiddleware.isBodyValid(UserValidator.register),
+  userMiddleware.isEmailUniq,
+  authController.administration,
+);
+router.patch(
+  "/admin/changerole/:userId",
+  authMiddleware.checkRole([EUserRoles.admin]),
+  authController.changeRole,
+);
+router.patch(
+  "/bypremium/:userId",
+  authMiddleware.checkRole([EUserRoles.admin, EUserRoles.manager]),
+  authController.byPremium,
 );
 
 router.post(

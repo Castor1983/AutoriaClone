@@ -13,4 +13,8 @@ export const templates = {
     templateName: "old-visit",
     subject: "come back",
   },
+  [EEmailAction.MODERATE_SPECIFICATION]: {
+    templateName: "moderate-specification",
+    subject: "There is promo in the database for moderation",
+  },
 };

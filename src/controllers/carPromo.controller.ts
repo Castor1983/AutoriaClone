@@ -2,16 +2,19 @@ import { NextFunction, Request, Response } from "express";
 
 import { carPromoService } from "../services/carPromo.service";
 import { ICarPromo } from "../types/carPromo.type";
+import { IQuery } from "../types/pagination.type";
 import { ITokenPayload } from "../types/token.types";
 
 class CarPromoController {
-  public async getAll(
+  public async getAllWithPagination(
     req: Request,
     res: Response,
     next: NextFunction,
   ): Promise<Response<ICarPromo[]>> {
     try {
-      const cars = await carPromoService.getAll();
+      const cars = await carPromoService.getAllWithPagination(
+        req.query as IQuery,
+      );
 
       return res.json(cars);
     } catch (e) {
@@ -61,7 +64,7 @@ class CarPromoController {
         req.params.carId,
         req.body,
         userId,
-          role
+        role,
       );
 
       res.status(201).json(car);

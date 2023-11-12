@@ -1,5 +1,5 @@
+import { EUserRoles } from "../enums/user-roles.enum";
 import { ApiError } from "../errors/api.error";
-import { User } from "../models/User.model";
 import { userRepository } from "../repositories/user.repository";
 import { IPaginationResponse, IQuery } from "../types/pagination.type";
 import { IUser } from "../types/user.type";
@@ -11,9 +11,9 @@ class UserService {
     try {
       const [users, itemsFound] = await userRepository.getMany(query);
 
-      const user = await User.findOne({
+      /*const user = await User.findOne({
         email: "julianne.oconner@kory.org",
-      });
+      });*/
 
       // const userNameWithAge = user.nameWithAge(); // name + age
 
@@ -35,7 +35,7 @@ class UserService {
     manageUserId: string,
     dto: Partial<IUser>,
     userId: string,
-    role: string
+    role: string,
   ): Promise<IUser> {
     this.checkAbilityToManage(userId, manageUserId, role);
     return await userRepository.updateOneById(manageUserId, dto);
@@ -49,9 +49,16 @@ class UserService {
     return await userRepository.findById(userId);
   }
 
-  private checkAbilityToManage(userId: string, manageUserId: string, role: string): void {
-    if (userId !== manageUserId) {
-      throw new ApiError("U can not manage this user", 403);
+  private checkAbilityToManage(
+    userId: string,
+    manageUserId: string,
+    role: string,
+  ): void {
+    if (
+      userId !== manageUserId &&
+      role !== (EUserRoles.admin || EUserRoles.manager)
+    ) {
+      throw new ApiError("You can not manage this user", 403);
     }
   }
 }

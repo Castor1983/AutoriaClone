@@ -8,7 +8,8 @@ import { CarPromoValidator } from "../validators/carPromo.validator";
 
 const router = Router();
 
-router.get("/", carPromoController.getAll);
+router.get("/", carPromoController.getAllWithPagination);
+
 router.post(
   "/",
   authMiddleware.checkAccessToken,
@@ -34,6 +35,12 @@ router.delete(
   authMiddleware.checkAccessToken,
   commonMiddleware.isIdValid("carId"),
   carPromoController.deleteCar,
+);
+router.get(
+  "/stat/:carId",
+  commonMiddleware.isIdValid("carId"),
+  carMiddleware.getByIdOrThrow,
+  carPromoController.getById,
 );
 
 export const carPromoRouter = router;

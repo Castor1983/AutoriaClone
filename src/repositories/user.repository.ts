@@ -49,10 +49,14 @@ class UserRepository {
     });
   }
 
-  public async setStatus(userId: string, status: any): Promise<void> {
+  public async setStatus(userId: string, status: string): Promise<void> {
     await User.updateOne({ _id: userId }, { $set: { status } });
-  }public async setRole(userId: string, role: any): Promise<void> {
+  }
+  public async setRole(userId: string, role: string): Promise<void> {
     await User.updateOne({ _id: userId }, { $set: { role } });
+  }
+  public async byPremium(userId: string, account: string): Promise<void> {
+    await User.updateOne({ _id: userId }, { $set: { account } });
   }
 
   public async deleteUser(userId: string): Promise<void> {
