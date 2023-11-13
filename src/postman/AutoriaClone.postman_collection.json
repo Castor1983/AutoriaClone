@@ -1,0 +1,693 @@
+{
+	"info": {
+		"_postman_id": "a8623ecf-c678-4ace-a942-4ec5624ea97f",
+		"name": "AutoriaClone",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28731292"
+	},
+	"item": [
+		{
+			"name": "PromoReq",
+			"item": [
+				{
+					"name": "AllPromo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_HOST}}/carspromo",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"carspromo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create promo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"model\": \"vectraS-type\",\r\n    \"year\": 2015,\r\n    \"brand\": \"OPEL\",\r\n    \"price\": 1000,\r\n    \"currency\": \"USD\",\r\n    \"region\": \"Харківська область\",\r\n    \"specification\": \"машина огонь сел поехал сел поехал\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}/carspromo",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"carspromo"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "promo by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_HOST}}/carspromo/",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"carspromo",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "upd promo by ID",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"model\": \"S-type\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}/carspromo/6551e1c644445f991e656f28",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"carspromo",
+								"6551e1c644445f991e656f28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "promo by ID",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_HOST}}/carspromo/654ff8887ee18cef9cee7f58",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"carspromo",
+								"654ff8887ee18cef9cee7f58"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "UserReq",
+			"item": [
+				{
+					"name": "me",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_HOST}}/users/me",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"users",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_HOST}}/users/65275b2433db69691705450a",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"users",
+								"65275b2433db69691705450a"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.environment.set(\"userId\", body._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"name\" : \"Levaka\", \"age\": 22 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}/users/6522e0d443ff79827cd38820",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"users",
+								"6522e0d443ff79827cd38820"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUsers",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_HOST}}/users",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getUserById",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.environment.set(\"userId\", body._id);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{API_HOST}}/users/6522e11f43ff79827cd38823",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"users",
+								"6522e11f43ff79827cd38823"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registerUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"Левчик\",\r\n    \"age\": 23,\r\n    \"gender\": \"male\",\r\n    \"email\": \"a0958086750@gmail.com\",\r\n    \"password\": \"1234qwerty@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}{{auth}}{{register}}",
+							"host": [
+								"{{API_HOST}}{{auth}}{{register}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "registerAdmin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n   \"name\": \"Левчик\",\r\n    \"email\": \"abvc0958086750@gmail.com\",\r\n    \"phone\": \"0958086750\",\r\n    \"password\": \"1234qwerty@\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}{{auth}}{{admin}}",
+							"host": [
+								"{{API_HOST}}{{auth}}{{admin}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "changeRole",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_HOST}}{{auth}}{{admin}}/changerole/654fcf2993c15a20babda9d5",
+							"host": [
+								"{{API_HOST}}{{auth}}{{admin}}"
+							],
+							"path": [
+								"changerole",
+								"654fcf2993c15a20babda9d5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "byPremium",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_HOST}}{{auth}}/bypremium/654fcf2993c15a20babda9d5",
+							"host": [
+								"{{API_HOST}}{{auth}}"
+							],
+							"path": [
+								"bypremium",
+								"654fcf2993c15a20babda9d5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "activateUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}/auth/activate?actionToken=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI3NWIyNDMzZGI2OTY5MTcwNTQ1MGEiLCJuYW1lIjoi0JvQtdCy0YfQuNC6IiwiaWF0IjoxNjk3MDc4MDUzLCJleHAiOjE2OTcxNjQ0NTN9.r8hVAIGuTF_1Agjugq_Ah1TkuMKGe0G_a8-mSNgqDFU",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"auth",
+								"activate"
+							],
+							"query": [
+								{
+									"key": "actionToken",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTI3NWIyNDMzZGI2OTY5MTcwNTQ1MGEiLCJuYW1lIjoi0JvQtdCy0YfQuNC6IiwiaWF0IjoxNjk3MDc4MDUzLCJleHAiOjE2OTcxNjQ0NTN9.r8hVAIGuTF_1Agjugq_Ah1TkuMKGe0G_a8-mSNgqDFU"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "resend activateUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{API_HOST}}/auth/activate",
+							"host": [
+								"{{API_HOST}}"
+							],
+							"path": [
+								"auth",
+								"activate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "loginUser",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.environment.set(\"accessToken\", body.accessToken);\r",
+									"pm.environment.set(\"refreshToken\", body.refreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"email\": \"a0958086750@gmail.com\",\r\n    \"password\": \"1234qwerty@\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}{{auth}}{{login}}",
+							"host": [
+								"{{API_HOST}}{{auth}}{{login}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = JSON.parse(responseBody);\r",
+									"\r",
+									"pm.environment.set(\"accessToken\", body.accessToken);\r",
+									"pm.environment.set(\"refreshToken\", body.refreshToken);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{refreshToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}{{auth}}{{refresh}}",
+							"host": [
+								"{{API_HOST}}{{auth}}{{refresh}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.environment.set(\"accessToken\", \"\");\r",
+									"pm.environment.set(\"refreshToken\", \"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}{{auth}}{{logout}}",
+							"host": [
+								"{{API_HOST}}{{auth}}{{logout}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "logoutAll",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.environment.set(\"accessToken\", \"\");\r",
+									"pm.environment.set(\"refreshToken\", \"\");"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{accessToken}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_HOST}}{{auth}}{{logout}}",
+							"host": [
+								"{{API_HOST}}{{auth}}{{logout}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
