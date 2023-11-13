@@ -46,7 +46,7 @@ class UserController {
         req.params.userId,
         req.body,
         userId,
-          role
+        role,
       );
 
       res.status(201).json(user);

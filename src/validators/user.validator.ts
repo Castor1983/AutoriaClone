@@ -1,16 +1,15 @@
 import joi from "joi";
+
 import { regexConstant } from "../constants/regex.constant";
 
 export class UserValidator {
   static firstName = joi.string().min(2).max(50).trim();
   static email = joi.string().regex(regexConstant.EMAIL).trim();
   static password = joi.string().regex(regexConstant.PASSWORD).trim();
-  static phone = joi.number()
-
+  static phone = joi.number();
 
   static update = joi.object({
     name: this.firstName,
-
   });
 
   static register = joi.object({

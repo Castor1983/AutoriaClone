@@ -14,14 +14,13 @@ class AuthMiddleware {
         }
 
         const { role: userRole } = tokenService.checkToken(
-            accessToken,
-            "access",
+          accessToken,
+          "access",
         );
 
-
-          if (!roles.includes(userRole)) {
-            throw new ApiError("Access denied", 403);
-          };
+        if (!roles.includes(userRole)) {
+          throw new ApiError("Access denied", 403);
+        }
 
         next();
       } catch (e) {
