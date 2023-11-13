@@ -1,6 +1,7 @@
 import { regexConstant } from "../constants/regex.constant";
 import { ECarPromoStatus } from "../enums/carPromo_status.enum";
 import { EEmailAction } from "../enums/email.action.enum";
+import { EUserTypeAccount } from "../enums/user-account.enum";
 import { EUserRoles } from "../enums/user-roles.enum";
 import { ApiError } from "../errors/api.error";
 import { carPromoRepository } from "../repositories/carPromo.repository";
@@ -27,7 +28,20 @@ class CarPromoService {
     }
   }
 
-  public async createCar(dto: ICarPromo, userId: string): Promise<ICarPromo> {
+  public async createCar(
+    dto: ICarPromo,
+    userId: string,
+    account: string,
+  ): Promise<ICarPromo> {
+    const userCar = await carPromoRepository.getOneByParams({
+      _userId: userId,
+    });
+    if (userCar && account === EUserTypeAccount.basic) {
+      throw new ApiError(
+        "You can not add any more cars. Buy premium account.",
+        403,
+      );
+    }
     const checkForProfanity = dto.specification.match(regexConstant.PROFANITY);
 
     if (!checkForProfanity) {

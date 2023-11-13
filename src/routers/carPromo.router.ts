@@ -9,7 +9,11 @@ import { CarPromoValidator } from "../validators/carPromo.validator";
 const router = Router();
 
 router.get("/", carPromoController.getAllWithPagination);
-
+/*router.get(
+  "/statistics",
+  authMiddleware.checkAccessToken,
+  carPromoController.getStatistics,
+);*/
 router.post(
   "/",
   authMiddleware.checkAccessToken,

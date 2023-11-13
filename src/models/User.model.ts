@@ -1,8 +1,9 @@
 import { Model, model, Schema } from "mongoose";
-import { EUserStatus } from "../enums/user-status.enum";
+
+import { EUserTypeAccount } from "../enums/user-account.enum";
 import { EUserRoles } from "../enums/user-roles.enum";
+import { EUserStatus } from "../enums/user-status.enum";
 import { IUser } from "../types/user.type";
-import {EUserTypeAccount} from "../enums/user-account.enum";
 
 export interface IUserModel
   extends Model<IUser, object, IUserMethods, IUserVirtuals> {
@@ -28,34 +29,34 @@ const userSchema = new Schema(
       lowercase: true,
       unique: true,
     },
-      phone: {
-          type: Number,
-          required: true,
-          unique: true,
-      },
-      password: {
+    phone: {
+      type: Number,
+      required: true,
+      unique: true,
+    },
+    password: {
       type: String,
       select: false,
       required: true,
     },
-      status: {
-          type: String,
-          enum: EUserStatus,
-          required: true,
-          default: EUserStatus.inactive,
-      },
-      role: {
-          type: String,
-          enum: EUserRoles,
-          required: true,
-          default: EUserRoles.seller,
-      },
-      account: {
-        type: String,
-          enum: EUserTypeAccount,
-          required: true,
-          default: EUserTypeAccount.basic
-      }
+    status: {
+      type: String,
+      enum: EUserStatus,
+      required: true,
+      default: EUserStatus.inactive,
+    },
+    role: {
+      type: String,
+      enum: EUserRoles,
+      required: true,
+      default: EUserRoles.seller,
+    },
+    account: {
+      type: String,
+      enum: EUserTypeAccount,
+      required: true,
+      default: EUserTypeAccount.basic,
+    },
   },
   {
     timestamps: true,

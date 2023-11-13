@@ -27,9 +27,9 @@ class CarPromoController {
     next: NextFunction,
   ): Promise<void> {
     try {
-      const { userId } = req.res.locals.tokenPayload as ITokenPayload;
+      const { userId, account } = req.res.locals.tokenPayload as ITokenPayload;
 
-      const car = await carPromoService.createCar(req.body, userId);
+      const car = await carPromoService.createCar(req.body, userId, account);
 
       res.status(201).json(car);
     } catch (e) {
@@ -82,6 +82,21 @@ class CarPromoController {
       next(e);
     }
   }
+  /*public async getStatistics(
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response<IStat[]>> {
+    try {
+      const { userId } = req.res.locals.tokenPayload as ITokenPayload;
+
+      const statistics = await carPromoService.getStatistics(userId);
+
+      return res.json(statistics);
+    } catch (e) {
+      next(e);
+    }
+  }*/
 }
 
 export const carPromoController = new CarPromoController();

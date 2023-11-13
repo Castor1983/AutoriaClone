@@ -1,4 +1,4 @@
 export enum EUserTypeAccount {
-    basic  = "basic",
-    premium   = "premium ",
+  basic = "basic",
+  premium = "premium ",
 }

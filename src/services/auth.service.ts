@@ -27,6 +27,7 @@ class AuthService {
 
       const admin = await this.register(dto);
       await userRepository.setRole(admin._id, EUserRoles.admin);
+      await userRepository.byPremium(admin._id, EUserTypeAccount.premium);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -34,6 +35,7 @@ class AuthService {
   public async changeRole(userId: string): Promise<void> {
     try {
       await userRepository.setRole(userId, EUserRoles.manager);
+      await userRepository.byPremium(userId, EUserTypeAccount.premium);
     } catch (e) {
       throw new ApiError(e.message, e.status);
     }
@@ -81,6 +83,7 @@ class AuthService {
         "password",
         "name",
         "role",
+        "account",
       ]);
       if (!user) {
         throw new ApiError("Invalid credentials provided", 401);
@@ -98,6 +101,7 @@ class AuthService {
         userId: user._id.toString(),
         name: user.name,
         role: user.role,
+        account: user.account,
       });
       await tokenRepository.create({ ...tokensPair, _userId: user._id });
 

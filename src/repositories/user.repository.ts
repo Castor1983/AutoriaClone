@@ -58,7 +58,6 @@ class UserRepository {
   public async byPremium(userId: string, account: string): Promise<void> {
     await User.updateOne({ _id: userId }, { $set: { account } });
   }
-
   public async deleteUser(userId: string): Promise<void> {
     await User.deleteOne({ _id: userId });
   }

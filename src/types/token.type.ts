@@ -6,6 +6,7 @@ import { IUser } from "./user.type";
 export interface ITokenPayload {
   userId: string;
   name: string;
+  account: string;
 }
 
 export interface ITokensPair {

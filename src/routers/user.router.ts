@@ -1,17 +1,18 @@
 import { Router } from "express";
 
 import { userController } from "../controllers/user.controller";
+import { EUserRoles } from "../enums/user-roles.enum";
 import { authMiddleware } from "../middlewares/auth.middleware";
 import { commonMiddleware } from "../middlewares/common.middleware";
 import { userMiddleware } from "../middlewares/user.middleware";
 import { UserValidator } from "../validators/user.validator";
-import {EUserRoles} from "../enums/user-roles.enum";
 
 const router = Router();
 
 router.get(
   "/",
-  authMiddleware.checkRole([EUserRoles.admin, EUserRoles.manager]), commonMiddleware.isQueryValid(10, "createdAt"),
+  authMiddleware.checkRole([EUserRoles.admin, EUserRoles.manager]),
+  commonMiddleware.isQueryValid(10, "createdAt"),
   userController.getAll,
 );
 
@@ -19,7 +20,8 @@ router.get("/me", authMiddleware.checkAccessToken, userController.getMe);
 
 router.get(
   "/:userId",
-    authMiddleware.checkRole([EUserRoles.admin, EUserRoles.manager]), commonMiddleware.isIdValid("userId"),
+  authMiddleware.checkRole([EUserRoles.admin, EUserRoles.manager]),
+  commonMiddleware.isIdValid("userId"),
   userMiddleware.getByIdOrThrow,
   userController.getById,
 );
@@ -32,7 +34,8 @@ router.put(
 );
 router.delete(
   "/:userId",
-    authMiddleware.checkRole([EUserRoles.admin, EUserRoles.manager]), authMiddleware.checkAccessToken,
+  authMiddleware.checkRole([EUserRoles.admin, EUserRoles.manager]),
+  authMiddleware.checkAccessToken,
   commonMiddleware.isIdValid("userId"),
   userController.deleteUser,
 );
