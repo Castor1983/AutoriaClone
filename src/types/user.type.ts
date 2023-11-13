@@ -1,8 +1,8 @@
 import { Document } from "mongoose";
 
-import { EUserStatus } from "../enums/user-status.enum";
+import { EUserTypeAccount } from "../enums/user-account.enum";
 import { EUserRoles } from "../enums/user-roles.enum";
-import {EUserTypeAccount} from "../enums/user-account.enum";
+import { EUserStatus } from "../enums/user-status.enum";
 
 export interface IUser extends Document {
   name?: string;
